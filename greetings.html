@@ -4,145 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greetings</title>
+    <title>Quote</title>
 
     <style>
-        body{
-            font-variant-caps: all-petite-caps;
-            font-family: garamond;
-        }
 
         .widget {
             padding: 5px 5px ;
             color: #000000;
-            display: flex;
-            justify-content:center;
-            align-items:center;
-            flex-direction: column;
-            max-width: 95%;
+            text-align: center;
+                max-width: 95%;
             margin: auto;
-            border: 3px solid #000000;
-            border-radius: 5px;
-            box-shadow: 2px 2px 1px 0px #000000;
-
-        }
-
-           
-        .greet{
-            font-size: 3em;
-        }
-
-        .date {
-      
-            font-family: garamond;
+            font-variant-caps: petite-caps;
             font-size: 2em;
+
         }
 
-        .clock {
-            font-family: garamond;
-            font-size: 2em;
-        }
+        div {
+             width: 95%;
+             min-height: 100px;
 
-        .time {
-            display: inline-block;
-            min-width: 20px;
-        }
+            background:
+                linear-gradient(to right, black 4px, transparent 4px) 0 0,
+                linear-gradient(to right, black 4px, transparent 4px) 0 100%,
+                linear-gradient(to left, black 4px, transparent 4px) 100% 0,
+                linear-gradient(to left, black 4px, transparent 4px) 100% 100%,
+                linear-gradient(to bottom, black 4px, transparent 4px) 0 0,
+                linear-gradient(to bottom, black 4px, transparent 4px) 100% 0,
+                linear-gradient(to top, black 4px, transparent 4px) 0 100%,
+                linear-gradient(to top, black 4px, transparent 4px) 100% 100%;
 
-        .colon {
-            font-size: 1em;
-            display: inline-block;
-        }
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+}
+
+     
     </style>
 </head>
 <body>
-    
-<div class="container>">
-    <div class="widget">
 
-            <div class="greet" id="greet"></div>
+    <div class="widget" id="widget"></div>
 
-                <div class="date" id="date"></div>
-                <div class="clock">
-                    <div class="time" id="hour"></div>
-                    <div class="colon">:</div>
-                    <div class="time" id="min"></div>
-                    <div class="colon">:</div>
-                    <div class="time" id="sec"></div>
-                </div>
-    </div>
-</div>
-    
+
 <script>
-function dispalyGreetings(today){
-        hrs = today.getHours();
-        name="Noir";
-        if (hrs < 12)
-            greet = 'Good Morning, '+name;
-        else if (hrs >= 12 && hrs <= 17)
-            greet = 'Good Afternoon, '+name;
-        else if (hrs >= 17 && hrs <= 24)
-            greet = 'Good Evening, '+name;
-        document.getElementById('greet').innerHTML = greet;
 
-    }
-
-    function dispalyDate(today) {  
-        const days = ['Sunday', 'мση∂αу', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+quotes=[
+"Learning, like success, is anything but a linear process",
+"I am in competition with no one. I have no desire to play the game of being better than anyone. I am simply trying to be better than the person I was yesterday.",
+"If you want to be interesting, you have to be interested.",
+"It's supposed to be hard. If it were easy, everyone would do it.",
+"Don’t worry if you’re not where you want to be yet. Great things take time. ",
+"If it's important you'll find a way. If it's not, you'll find an excuse.",
+"Most people overestimate what they can do in one year and underestimate what they can do in ten years.",
+"A goal without a plan is just a wish.",
+"change your 24 hours and you'll change your life",
+"Stop thinking you are not qualified, not fit, or not experienced enough,",
+"Growth takes place when you start doing stuff you are not qualified to do.",
+"Be who you are and say what you feel, because those who mind don't matter, and those who matter don't mind.",
+"Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.",
 ];
 
-        var dayName = days[today.getDay()];
-        var monthName = monthNames[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
-        document.getElementById('date').innerHTML =dayName+", "+monthName+" "+date+" "+year;
+const INTERVAL = 86400000;
 
-    }
+function dispalyQuote(){
 
-
-    function dispalyClock(today) {
-
-        var hour = padZeros(twelveHour(today.getHours()));
-        var minutes = padZeros(today.getMinutes());
-        var seconds = padZeros(today.getSeconds());
-       
-        if(today.getHours() >=12){
-            seconds+=" pm"
-        }
-        else{
-            seconds+=" am"
-        }
-       
-        document.getElementById('hour').innerHTML = hour;
-        document.getElementById('min').innerHTML = minutes;
-        document.getElementById('sec').innerHTML = seconds;
-    }
-
-    function twelveHour(hour) {
-        if (hour > 12) {
-            return hour -= 12
-        } else if (hour === 0) {
-            return hour = 12;
-        } else {
-            return hour
-        }
-    }
-    function padZeros(num) {
-        if (num < 10) {
-            num = '0' + num
-        };
-        return num;
+    document.getElementById('widget').innerHTML =quotes[0];
+    quotes.forEach((quote, i) => {
+        setTimeout(() => {
+            document.getElementById('widget').innerHTML =quote;
+        }, i * INTERVAL);  
+    });
     }
 
     function dispalyWidget() {
-        var today = new Date();
-        dispalyGreetings(today);
-        dispalyDate(today);
-        dispalyClock(today);
-        setTimeout(dispalyWidget, 500);
+        dispalyQuote();
+        setTimeout(dispalyWidget, quotes.length*INTERVAL);
     }
-
     dispalyWidget()
 
 </script>
